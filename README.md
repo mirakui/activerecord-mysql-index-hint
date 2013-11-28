@@ -1,6 +1,8 @@
-# Activerecord::Mysql::Index::Hint
+[![Build Status](https://travis-ci.org/mirakui/activerecord-mysql-index-hint.png)](https://travis-ci.org/mirakui/activerecord-mysql-index-hint)
 
-TODO: Write a gem description
+# activerecord-mysql-index-hint
+
+MySQL index hint support for ActiveRecord
 
 ## Installation
 
@@ -8,22 +10,10 @@ Add this line to your application's Gemfile:
 
     gem 'activerecord-mysql-index-hint'
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install activerecord-mysql-index-hint
-
 ## Usage
 
-TODO: Write usage instructions here
+    class Product < ActiveRecord::Base
+    end
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+    Product.where(user_id: 1).force_index(:idx_user_id).first
+    # => SELECT `products`.* FROM `products` FORCE INDEX(`idx_user_id`) WHERE `products`.`user_id` = 1 LIMIT 1
