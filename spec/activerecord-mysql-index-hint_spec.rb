@@ -11,15 +11,17 @@ module Mysql2
   end
 end
 
-module ActiveRecord
-  module ConnectionAdapters
-    class Mysql2Adapter
-      def quote_string(string)
-        string
-      end
-      def configure_connection
-      end
-    end
+ActiveRecord::ConnectionAdapters::Mysql2Adapter.class_eval do
+  def quote_string(string)
+    string
+  end
+  def configure_connection
+  end
+end
+
+Arel::Visitors::ToSql.class_eval do
+  def column_for o
+    nil
   end
 end
 
@@ -31,19 +33,19 @@ describe 'ActiveRecord Index Hint' do
   context 'with AR::Relation' do
     it do
       expect(
-        Product.all.use_index(:idx1).limit(1).to_sql
+        Product.limit(1).use_index(:idx1).to_sql
       ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`)  LIMIT 1')
     end
 
     it do
       expect(
-        Product.all.force_index(:idx1).limit(1).to_sql
+        Product.limit(1).force_index(:idx1).to_sql
       ).to eq('SELECT  `products`.* FROM `products` FORCE INDEX(`idx1`)  LIMIT 1')
     end
 
     it do
       expect(
-        Product.all.ignore_index(:idx1).limit(1).to_sql
+        Product.limit(1).ignore_index(:idx1).to_sql
       ).to eq('SELECT  `products`.* FROM `products` IGNORE INDEX(`idx1`)  LIMIT 1')
     end
   end
@@ -59,7 +61,7 @@ describe 'ActiveRecord Index Hint' do
   context 'with multiple indexes' do
     it do
       expect(
-        Product.all.use_index(:idx1, :idx2).limit(1).to_sql
+        Product.limit(1).use_index(:idx1, :idx2).to_sql
       ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`, `idx2`)  LIMIT 1')
     end
   end
