@@ -28,21 +28,39 @@ class Product < ActiveRecord::Base
 end
 
 describe 'ActiveRecord Index Hint' do
-  it do
-    expect(
-      Product.from('`products` USE INDEX(`idx1`)').limit(1).to_sql
-    ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`)  LIMIT 1')
+  context 'with AR::Relation' do
+    it do
+      expect(
+        Product.all.use_index(:idx1).limit(1).to_sql
+      ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`)  LIMIT 1')
+    end
+
+    it do
+      expect(
+        Product.all.force_index(:idx1).limit(1).to_sql
+      ).to eq('SELECT  `products`.* FROM `products` FORCE INDEX(`idx1`)  LIMIT 1')
+    end
+
+    it do
+      expect(
+        Product.all.ignore_index(:idx1).limit(1).to_sql
+      ).to eq('SELECT  `products`.* FROM `products` IGNORE INDEX(`idx1`)  LIMIT 1')
+    end
   end
 
-  it do
-    expect(
-      Product.all.use_index(:idx1).limit(1).to_sql
-    ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`)  LIMIT 1')
+  context 'with AR::Base' do
+    it do
+      expect(
+        Product.use_index(:idx1).limit(1).to_sql
+      ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`)  LIMIT 1')
+    end
   end
 
-  it do
-    expect(
-      Product.all.force_index(:idx1).limit(1).to_sql
-    ).to eq('SELECT  `products`.* FROM `products` FORCE INDEX(`idx1`)  LIMIT 1')
+  context 'with multiple indexes' do
+    it do
+      expect(
+        Product.all.use_index(:idx1, :idx2).limit(1).to_sql
+      ).to eq('SELECT  `products`.* FROM `products` USE INDEX(`idx1`, `idx2`)  LIMIT 1')
+    end
   end
 end
