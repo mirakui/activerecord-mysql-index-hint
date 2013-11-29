@@ -22,5 +22,5 @@ module ActiveRecordMysqlIndexHint
   end
 end
 
-ActiveRecord::Base.send :extend, ActiveRecordMysqlIndexHint
+ActiveRecord::Base.extend ActiveRecordMysqlIndexHint
 ActiveRecord::Relation.send :include, ActiveRecordMysqlIndexHint
