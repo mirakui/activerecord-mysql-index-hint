@@ -1,5 +1,4 @@
 require 'active_record'
-require 'active_record/relation/query_methods'
 
 module ActiveRecordMysqlIndexHint
   def use_index(*args)
@@ -22,5 +21,8 @@ module ActiveRecordMysqlIndexHint
   end
 end
 
-ActiveRecord::Base.extend ActiveRecordMysqlIndexHint
-ActiveRecord::Relation.send :include, ActiveRecordMysqlIndexHint
+ActiveSupport.on_load :active_record do
+  require 'active_record/relation/query_methods'
+  ActiveRecord::Base.extend ActiveRecordMysqlIndexHint
+  ActiveRecord::Relation.send :include, ActiveRecordMysqlIndexHint
+end
