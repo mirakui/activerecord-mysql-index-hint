@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'appraisal'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'mysql2'
+  spec.add_development_dependency 'mysql2', '= 0.4.1'
 end

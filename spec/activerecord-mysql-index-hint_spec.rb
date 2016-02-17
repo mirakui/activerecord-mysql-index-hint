@@ -3,13 +3,13 @@ require 'mysql2'
 require 'active_record/connection_adapters/mysql2_adapter'
 require 'activerecord-mysql-index-hint'
 
-module Mysql2
-  class Client
-    def initialize(opts={})
-      @query_options = @@default_query_options.dup.merge opts
-    end
-  end
-end
+#module Mysql2
+#  class Client
+#    def initialize(opts={})
+#      @query_options = @@default_query_options.dup.merge opts
+#    end
+#  end
+#end
 
 ActiveRecord::ConnectionAdapters::Mysql2Adapter.class_eval do
   def quote_string(string)
