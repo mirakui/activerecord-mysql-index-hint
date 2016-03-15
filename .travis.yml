@@ -9,3 +9,8 @@ script: bundle exec rake spec
 gemfile:
   - gemfiles/4.1.gemfile
   - gemfiles/4.2.gemfile
+  - gemfiles/5.0.gemfile
+matrix:
+  allow_failures:
+    - gemfile: gemfiles/5.0.gemfile
+  fast_finish: true
