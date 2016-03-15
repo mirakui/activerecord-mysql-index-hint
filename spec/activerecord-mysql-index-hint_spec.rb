@@ -1,21 +1,30 @@
 require 'active_record'
-require 'mysql2'
 require 'active_record/connection_adapters/mysql2_adapter'
 require 'activerecord-mysql-index-hint'
 
-#module Mysql2
-#  class Client
-#    def initialize(opts={})
-#      @query_options = @@default_query_options.dup.merge opts
-#    end
-#  end
-#end
-
-ActiveRecord::ConnectionAdapters::Mysql2Adapter.class_eval do
-  def quote_string(string)
-    string
+module ActiveRecord
+  module ConnectionHandling
+    prepend Module.new {
+      def mysql2_connection(config)
+        ConnectionAdapters::Mysql2Adapter.new(nil, logger, nil, config)
+      end
+    }
   end
-  def configure_connection
+
+  module ConnectionAdapters
+    class Mysql2Adapter
+      prepend Module.new {
+        def quote_string(string)
+          string
+        end
+
+        def reconnect!
+        end
+
+        def configure_connection
+        end
+      }
+    end
   end
 end
 

@@ -17,7 +17,7 @@ module ActiveRecordMysqlIndexHint
   def from_with_index_hint(hint_type, *args)
     return self if args.blank?
     indexes = args.map {|index| connection.quote_column_name index }
-    self.from("#{quoted_table_name} #{hint_type} INDEX(#{indexes.join(', ')})")
+    self.from([Arel.sql("#{quoted_table_name} #{hint_type} INDEX(#{indexes.join(', ')})")])
   end
 end
 
