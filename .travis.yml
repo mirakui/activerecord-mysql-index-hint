@@ -13,4 +13,5 @@ gemfile:
 matrix:
   allow_failures:
     - gemfile: gemfiles/5.0.gemfile
+    - rvm: ruby-head
   fast_finish: true
