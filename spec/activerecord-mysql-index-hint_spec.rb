@@ -23,6 +23,10 @@ module ActiveRecord
 
         def configure_connection
         end
+
+        def full_version
+          "5.0.0"
+        end
       }
     end
   end
