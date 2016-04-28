@@ -22,7 +22,6 @@ module ActiveRecordMysqlIndexHint
 end
 
 ActiveSupport.on_load :active_record do
-  require 'active_record/relation/query_methods'
   ActiveRecord::Base.extend ActiveRecordMysqlIndexHint
   ActiveRecord::Relation.send :include, ActiveRecordMysqlIndexHint
 end
