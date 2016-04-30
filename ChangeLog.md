@@ -1,4 +1,7 @@
 # ChangeLog
+## 0.0.4
+- Support Rails 5 (Thanks @adorechic)
+
 ## 0.0.3
 - Fix count with eager_load (Thanks @kamipo)
 
