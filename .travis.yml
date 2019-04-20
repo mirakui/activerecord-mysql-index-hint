@@ -5,12 +5,12 @@ rvm:
   - 2.5
   - 2.6
 gemfile:
-  - gemfiles/ar_4.2.gemfile
-  - gemfiles/ar_5.2.gemfile
-  - gemfiles/ar_6.0.gemfile
+  - gemfiles/4.2.gemfile
+  - gemfiles/5.2.gemfile
+  - gemfiles/6.0.gemfile
 matrix:
   allow_failures:
-    - gemfile: gemfiles/ar_6.0.gemfile
+    - gemfile: gemfiles/6.0.gemfile
     - rvm: 2.4
   fast_finish: true
 before_install:
